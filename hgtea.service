@@ -1,0 +1,15 @@
+[Unit]
+Description=HokieGeek.net_Tea
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill tea.hokiegeek.net_1
+ExecStartPre=-/usr/bin/docker rm tea.hokiegeek.net_1
+ExecStartPre=/usr/bin/docker pull hokiegeek/hg-tea
+ExecStart=/usr/bin/docker run --name tea.hokiegeek.net_1 -p 8888:3000 hokiegeek/hg-tea
+ExecStop=/usr/bin/docker stop tea.hokiegeek.net_1
+
+[Install]
+WantedBy=multi-user.target

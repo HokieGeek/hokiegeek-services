@@ -1,0 +1,15 @@
+[Unit]
+Description=Go server which interacts with dondedb
+After=couchdb.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill donded
+ExecStartPre=-/usr/bin/docker rm donded
+ExecStartPre=/usr/bin/docker pull hokiegeek/donde-estas-daemon
+ExecStart=/usr/bin/docker run --name donded --publish 8585:8585 --link dondedb:db hokiegeek/donde-estas-daemon
+ExecStop=/usr/bin/docker stop donded
+
+[Install]
+WantedBy=multi-user.target

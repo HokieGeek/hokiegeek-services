@@ -1,0 +1,15 @@
+[Unit]
+Description=HokieGeek.net
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill hokiegeek.net_1
+ExecStartPre=-/usr/bin/docker rm hokiegeek.net_1
+ExecStartPre=/usr/bin/docker pull hokiegeek/hokiegeek.net
+ExecStart=/usr/bin/docker run --name hokiegeek.net_1 -p 80:3000 hokiegeek/hokiegeek.net
+ExecStop=/usr/bin/docker stop hokiegeek.net_1
+
+[Install]
+WantedBy=multi-user.target

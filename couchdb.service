@@ -1,0 +1,15 @@
+[Unit]
+Description=CouchDb for Donde Estas
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill dondedb
+ExecStartPre=-/usr/bin/docker rm dondedb
+ExecStartPre=/usr/bin/docker pull couchdb
+ExecStart=/usr/bin/docker run --name --volume /usr/local/var/lib/couchdb:/usr/local/var/lib/couchdb dondedb couchdb
+ExecStop=/usr/bin/docker stop couchdb
+
+[Install]
+WantedBy=multi-user.target

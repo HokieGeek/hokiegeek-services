@@ -1,0 +1,15 @@
+[Unit]
+Description=Go Service Restarter
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill service_restarter_1
+ExecStartPre=-/usr/bin/docker rm service_restarter_1
+ExecStartPre=/usr/bin/docker pull hokiegeek/servicerestarter
+ExecStart=/usr/bin/docker run --priviledged -v /var/run/dbus:/var/run/dbus -v /run/systemd:/run/systemd -v /usr/bin/systemctl:/usr/bin/systemctl --name service_restarter_1 -p 8081:8081 hokiegeek/servicerestarter --port 8081 9990d936-93cc-11e6-8b8a-3fa7c4380d63
+ExecStop=/usr/bin/docker stop service_restarter_1
+
+[Install]
+WantedBy=multi-user.target
