@@ -34,3 +34,5 @@ for svc in "${services[@]}"; do
     	systemctl restart ${svc}
 	fi
 done
+
+systemctl --failed
