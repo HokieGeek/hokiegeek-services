@@ -8,7 +8,8 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill dondedb
 ExecStartPre=-/usr/bin/docker rm dondedb
 ExecStartPre=/usr/bin/docker pull couchdb
-ExecStart=/usr/bin/docker run --name --volume /usr/local/var/lib/couchdb:/usr/local/var/lib/couchdb dondedb couchdb
+ExecStartPre=/usr/bin/mkdir -p /home/core/couchdb
+ExecStart=/usr/bin/docker run --name dondedb --volume /home/core/couchdb:/usr/local/var/lib/couchdb couchdb
 ExecStop=/usr/bin/docker stop couchdb
 
 [Install]
