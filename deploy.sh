@@ -1,5 +1,7 @@
 #!/bin/bash
 
+here=$(cd ${0%/*}; pwd)
+
 if (( $# > 0 )); then
 	services=($@)
 else
@@ -16,20 +18,18 @@ dest=/etc/systemd/system
 
 for svc in "${services[@]}"; do
     echo "[Copying ${svc}]"
-	if [ ! -f "./${svc}" ]; then
+	if [ ! -f "${here}/${svc}" ]; then
 		echo "Not found" >&2
 	else
-    	cp ./${svc} ${dest}/${svc}
+    	cp ${here}/${svc} ${dest}/${svc}
 	fi
 done
 
 systemctl daemon-reload
 
 for svc in "${services[@]}"; do
-    echo "[Starting ${svc}]"
-	if [ ! -f "./${svc}" ]; then
-		echo "Not found" >&2
-	else
+	if [ -f "${here}/${svc}" ]; then
+    	echo "[Starting ${svc}]"
         systemctl enable ${svc}
     	systemctl restart ${svc}
 	fi
