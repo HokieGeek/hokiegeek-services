@@ -11,6 +11,8 @@ ExecStartPre=/usr/bin/docker pull couchdb
 ExecStartPre=/usr/bin/mkdir -p /home/core/couchdb
 ExecStart=/usr/bin/docker run --name dondedb --volume /home/core/couchdb:/usr/local/var/lib/couchdb couchdb
 ExecStop=/usr/bin/docker stop couchdb
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target

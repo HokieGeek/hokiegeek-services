@@ -5,6 +5,8 @@ Description=Go Service Restarter
 TimeoutStartSec=0
 ExecStart=/home/core/ServiceRestarter --port 8081 9990d936-93cc-11e6-8b8a-3fa7c4380d63
 # ExecStop=pkill -f ServiceRestarter
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
