@@ -21,17 +21,17 @@ for svc in "${services[@]}"; do
 	if [ ! -f "${here}/${svc}" ]; then
 		echo "Not found" >&2
 	else
-    	cp ${here}/${svc} ${dest}/${svc}
+    	sudo cp ${here}/${svc} ${dest}/${svc}
 	fi
 done
 
-systemctl daemon-reload
+sudo systemctl daemon-reload
 
 for svc in "${services[@]}"; do
 	if [ -f "${here}/${svc}" ]; then
     	echo "[Starting ${svc}]"
-        systemctl enable ${svc}
-    	systemctl restart ${svc}
+        sudo systemctl enable ${svc}
+    	sudo systemctl restart ${svc}
 	fi
 done
 
