@@ -1,0 +1,11 @@
+#!/bin/sh
+
+sudo systemctl stop couchdb.service
+sudo systemctl stop donded.service
+
+sudo systemctl start couchdb.service
+sleep 10s
+sudo systemctl start donded.service
+
+sleep 8s
+docker logs -f donded
