@@ -1,0 +1,12 @@
+---
+- name: Configuration for hokiegeek.net
+    hosts: all
+    tasks:
+        - name: Copy the services
+          copy: src=services/ dest=/etc/systemd/system backup=yes
+
+        - systemd: daemon_reload=yes state=restarted enabled=yes name=restarter
+        - systemd: daemon_reload=yes state=restarted enabled=yes name=hgtea
+        - systemd: daemon_reload=yes state=restarted enabled=yes name=hokiegeek
+        - systemd: daemon_reload=yes state=restarted enabled=yes name=couchdb
+        - systemd: daemon_reload=yes state=restarted enabled=yes name=donded

@@ -1,0 +1,39 @@
+---
+- name: Configuration for the Donde Estas stack
+    hosts: all
+    tasks:
+        # - name: Copy the services
+        #   copy: src=services/ dest=/etc/systemd/system backup=yes
+
+        # - systemd: daemon_reload=yes state=restarted enabled=yes name=couchdb
+        # - systemd: daemon_reload=yes state=restarted enabled=yes name=donded
+
+        - name: Create the couchdb directory
+          file:
+            path: /home/core/couchdb
+            state: directory
+            mode: 775
+
+        - name: Pull and restart the couchdb image
+          docker_image: name=couchdb
+          docker_container:
+              name: dondedb
+              image: couchdb
+              volumes:
+                  - "/home/core/couchdb:/usr/local/var/lib/couchdb"
+              detach: yes
+              state: started
+              restart: yes
+
+        - name: Pull and restart the donde server image
+          docker_image: name=hokiegeek/donde-estas-daemon
+          docker_container:
+              name: donded
+              image: hokiegeek/donde-estas-daemon
+              links:
+                  - "dondedb:db"
+              exposed_ports:
+                  - "8585:8080"
+              detach: yes
+              state: started
+              restart: yes
