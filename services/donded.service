@@ -8,10 +8,10 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill donded
 ExecStartPre=-/usr/bin/docker rm donded
 ExecStartPre=/usr/bin/docker pull hokiegeek/donde-estas-daemon
-ExecStart=/usr/bin/docker run --name donded --publish 8585:8585 --link dondedb:db hokiegeek/donde-estas-daemon
+ExecStart=/usr/bin/docker run --name donded --publish 8585:8080 --link dondedb:db hokiegeek/donde-estas-daemon
 ExecStop=/usr/bin/docker stop donded
-Restart=always
-RestartSec=3
+# Restart=always
+# RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
