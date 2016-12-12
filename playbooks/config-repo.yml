@@ -1,0 +1,8 @@
+---
+- name: Add the config repository for future work?
+  tasks:
+      - git:
+          repo: https://github.com/HokieGeek/hokiegeek.net-cfg.git
+          # repo: git@github.com:HokieGeek/hokiegeek-services.git
+          dest: /home/core
+          # key_file: /home/core/.ssh/id_rsa_github

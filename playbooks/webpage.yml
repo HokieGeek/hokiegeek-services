@@ -1,0 +1,12 @@
+---
+- name: Configuration for hokiegeek.net
+    hosts: all
+    sudo: true
+    tasks:
+        - name: Add the hgtea service
+          copy: src=../services/hgtea.service dest=/etc/systemd/system backup=yes
+          systemd: daemon_reload=yes state=restarted enabled=yes name=hgtea
+
+        - name: Add the hokiegeek service
+          copy: src=../services/hokiegeek.service dest=/etc/systemd/system backup=yes
+          systemd: daemon_reload=yes state=restarted enabled=yes name=hokiegeek

@@ -1,0 +1,9 @@
+---
+- name: Configuration for the restarter service
+    hosts: all
+    sudo: true
+    tasks:
+        # TODO: where is the binary coming from?
+        - name: Add the restarter service
+          copy: src=../services/restarter.service dest=/etc/systemd/system backup=yes
+          systemd: daemon_reload=yes state=restarted enabled=yes name=restarter
