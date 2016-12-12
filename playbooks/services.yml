@@ -1,6 +1,7 @@
 ---
 - name: Configuration for hokiegeek.net
     hosts: all
+    sudo: true
     tasks:
         - name: Copy the services
           copy: src=services/ dest=/etc/systemd/system backup=yes
